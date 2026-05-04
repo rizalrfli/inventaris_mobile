@@ -94,7 +94,7 @@ class DashboardScreen extends ConsumerWidget {
         ),
         CircleAvatar(
           backgroundColor: AppColors.electricTeal.withOpacity(0.2),
-          child: const Icon(LucideIcons.user, color: AppColors.electricTeal),
+          child: const Icon(LucideIcons.wallet, color: AppColors.electricTeal),
         ),
       ],
     );
