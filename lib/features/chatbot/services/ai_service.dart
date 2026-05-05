@@ -4,7 +4,7 @@ class AiService {
   final Dio _dio = Dio();
   
   // TODO: Replace with real Gemini / OpenAI API Key from secure storage / dotenv
-  final String _apiKey = 'YOUR_API_KEY_HERE';
+  final String _apiKey = 'AIzaSyByiGKXb3JDkQnFaH-3apRBGf2vxkyPsIc';
 
   Future<String> getChatbotResponse(String message, String contextData) async {
     // If there is no real API key, return a mock response based on keywords
@@ -16,7 +16,7 @@ class AiService {
     try {
       // Example using Gemini API (Generative Language API)
       final response = await _dio.post(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$_apiKey',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$_apiKey',
         data: {
           "contents": [
             {
@@ -39,7 +39,10 @@ class AiService {
         return "Maaf, saya sedang mengalami gangguan server. Silakan coba lagi nanti.";
       }
     } catch (e) {
-      return "Terjadi kesalahan saat menghubungi server AI. Pastikan API Key valid.";
+      if (e is DioException) {
+        return "Terjadi kesalahan jaringan/API: ${e.response?.statusCode} - ${e.response?.data['error']['message'] ?? e.message}";
+      }
+      return "Terjadi kesalahan: $e";
     }
   }
 
