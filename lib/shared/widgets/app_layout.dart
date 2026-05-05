@@ -72,6 +72,10 @@ class _AppLayoutState extends State<AppLayout> {
                   icon: Icon(LucideIcons.bot),
                   label: 'AI Asisten',
                 ),
+                NavigationDestination(
+                  icon: Icon(LucideIcons.piggyBank),
+                  label: 'Tabungan',
+                ),
               ],
             ),
           ),

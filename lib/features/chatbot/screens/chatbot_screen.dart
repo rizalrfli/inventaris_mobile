@@ -24,11 +24,15 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final AiService _aiService = AiService();
-  
+
   final List<ChatMessage> _messages = [
-    ChatMessage(text: 'Halo! Saya Antigravity AI. Ada yang bisa saya bantu dengan keuangan Anda hari ini?', isUser: false),
+    ChatMessage(
+      text:
+          'Halo! Saya TabungAI. Ada yang bisa saya bantu dengan keuangan Anda hari ini?',
+      isUser: false,
+    ),
   ];
-  
+
   bool _isLoading = false;
 
   void _sendMessage() async {
@@ -39,7 +43,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
       _messages.add(ChatMessage(text: text, isUser: true));
       _isLoading = true;
     });
-    
+
     _controller.clear();
     _scrollToBottom();
 
@@ -51,7 +55,8 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
       if (t.isIncome) totalIncome += t.amount;
       if (t.isExpense) totalExpense += t.amount;
     }
-    String contextData = 'Pemasukan total: Rp$totalIncome. Pengeluaran total: Rp$totalExpense.';
+    String contextData =
+        'Pemasukan total: Rp$totalIncome. Pengeluaran total: Rp$totalExpense.';
 
     // Call API
     final response = await _aiService.getChatbotResponse(text, contextData);
@@ -87,7 +92,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
               child: Icon(LucideIcons.bot, size: 20, color: AppColors.deepNavy),
             ),
             const SizedBox(width: 12),
-            const Text('Antigravity AI'),
+            const Text('TabungAI'),
           ],
         ),
         backgroundColor: Theme.of(context).cardTheme.color,
@@ -123,7 +128,10 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                       SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.electricTeal),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.electricTeal,
+                        ),
                       ),
                       SizedBox(width: 12),
                       Text('AI sedang mengetik...'),
@@ -149,7 +157,9 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
         decoration: BoxDecoration(
-          color: isUser ? AppColors.deepNavy : Theme.of(context).cardTheme.color,
+          color: isUser
+              ? AppColors.deepNavy
+              : Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -160,7 +170,9 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
         child: Text(
           message.text,
           style: TextStyle(
-            color: isUser ? Colors.white : Theme.of(context).textTheme.bodyLarge?.color,
+            color: isUser
+                ? Colors.white
+                : Theme.of(context).textTheme.bodyLarge?.color,
             fontSize: 15,
           ),
         ),
@@ -205,7 +217,10 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                   ),
                   filled: true,
                   fillColor: Theme.of(context).cardTheme.color,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                 ),
               ),
             ),

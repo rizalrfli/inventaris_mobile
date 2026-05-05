@@ -5,6 +5,8 @@ import '../../features/chatbot/screens/chatbot_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/tracking/screens/tracking_screen.dart';
 import '../../features/transactions/screens/add_transaction_screen.dart';
+import '../../features/savings/screens/savings_screen.dart';
+import '../../features/savings/screens/saving_detail_screen.dart';
 import '../../shared/widgets/app_layout.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -40,6 +42,20 @@ final GoRouter appRouter = GoRouter(
             GoRoute(
               path: '/chatbot',
               builder: (context, state) => const ChatbotScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/savings',
+              builder: (context, state) => const SavingsScreen(),
+              routes: [
+                GoRoute(
+                  path: ':id',
+                  builder: (context, state) => SavingDetailScreen(goalId: state.pathParameters['id']!),
+                ),
+              ],
             ),
           ],
         ),
