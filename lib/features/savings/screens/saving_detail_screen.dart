@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -75,6 +76,31 @@ class SavingDetailScreen extends ConsumerWidget {
         title: Text(goal.name),
         backgroundColor: Theme.of(context).cardTheme.color,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(LucideIcons.trash2, color: AppColors.coralRed),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Hapus Goal?'),
+                  content: Text('Apakah Anda yakin ingin menghapus goal "${goal.name}"? Semua data setoran juga akan terhapus.'),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Batal')),
+                    TextButton(
+                      onPressed: () {
+                        ref.read(savingsProvider.notifier).deleteGoal(goal.id);
+                        Navigator.pop(ctx);
+                        context.pop();
+                      },
+                      child: const Text('Hapus', style: TextStyle(color: AppColors.coralRed)),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),

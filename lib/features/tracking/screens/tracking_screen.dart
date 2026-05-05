@@ -152,28 +152,44 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen> {
                       final t = selectedDayTransactions[index];
                       final isIncome = t.isIncome;
                       
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        child: ListTile(
-                          leading: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: isIncome ? AppColors.electricTeal.withOpacity(0.1) : AppColors.coralRed.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(
-                              isIncome ? LucideIcons.arrowDownLeft : LucideIcons.arrowUpRight,
-                              color: isIncome ? AppColors.electricTeal : AppColors.coralRed,
-                            ),
+                      return Dismissible(
+                        key: Key(t.id),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(right: 20),
+                          decoration: BoxDecoration(
+                            color: AppColors.coralRed,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          title: Text(t.category, style: const TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: t.description?.isNotEmpty == true ? Text(t.description!) : null,
-                          trailing: Text(
-                            '${isIncome ? '+' : '-'}${CurrencyFormatter.formatRupiah(t.amount)}',
-                            style: TextStyle(
-                              color: isIncome ? AppColors.electricTeal : AppColors.coralRed,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                          child: const Icon(LucideIcons.trash2, color: Colors.white),
+                        ),
+                        onDismissed: (direction) {
+                          ref.read(transactionListProvider.notifier).deleteTransaction(t.id);
+                        },
+                        child: Card(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          child: ListTile(
+                            leading: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: isIncome ? AppColors.electricTeal.withOpacity(0.1) : AppColors.coralRed.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Icon(
+                                isIncome ? LucideIcons.arrowDownLeft : LucideIcons.arrowUpRight,
+                                color: isIncome ? AppColors.electricTeal : AppColors.coralRed,
+                              ),
+                            ),
+                            title: Text(t.category, style: const TextStyle(fontWeight: FontWeight.bold)),
+                            subtitle: t.description?.isNotEmpty == true ? Text(t.description!) : null,
+                            trailing: Text(
+                              '${isIncome ? '+' : '-'}${CurrencyFormatter.formatRupiah(t.amount)}',
+                              style: TextStyle(
+                                color: isIncome ? AppColors.electricTeal : AppColors.coralRed,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
